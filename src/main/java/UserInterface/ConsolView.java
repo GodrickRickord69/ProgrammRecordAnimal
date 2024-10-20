@@ -2,7 +2,7 @@ package UserInterface;
 
 import java.util.Scanner;
 import java.util.List;
-import Modeli.*;
+import Models.*;
 
 public class ConsolView {
     Scanner in;

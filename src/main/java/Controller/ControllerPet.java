@@ -1,15 +1,15 @@
 package Controller;
 
 import Models.*;
-import Servis.Repository;
-import Servis.PetomecRepository;
+import Services.Repository;
+import Services.PetRepository;
 import UserInterface.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import Exception.UncorrectData;
 
 public class ControllerPet {
-    private Repository<Pet> petomecRepositorij;
+    private Repository<Pet> petRepository;
     private Creator petCreator;
     private final View<Pet> view;
     private Validator validator;
@@ -45,7 +45,7 @@ public class ControllerPet {
         pet.setName(data[0]);
         pet.setBirthday(birthday);
         try{
-            int res = petomecRepositorij.update(pet);
+            int res = petRepository.update(pet);
             view.showMessage(String.format("%d Запись изменена \n", res));
         }catch (RuntimeException e){
             view.showMessage(e. getMessage());
@@ -54,13 +54,13 @@ public class ControllerPet {
 
     public void getAllPet(){
         try{
-            view.printAll(petomecRepositorij.getAll(), Pet.class);
+            view.printAll(petRepository.getAll(), Pet.class);
         } catch (RuntimeException e){
             view.showMessage(e.getMessage());
         }
     }
 
-    public boolean trainPetomec(int id, String comanda) {
+    public boolean trainPet(int id, String comanda) {
         try{
             if(((PetRepository)petRepository).getComandsById(id, 1).contains(comanda))
                 view.showMessage("это мы умеем");

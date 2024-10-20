@@ -118,14 +118,14 @@ public class ConsolMenu {
         }
     }
 
-    private void menuTrainPet(int petomecId, Scanner in) {
+    private void menuTrainPet(int petId, Scanner in) {
         Scanner sc = in;
         while (true) {
             System.out.println("Введите новую команду, 7 для возврата в основное меню: ");
             String command = sc.nextLine();
             if (command.length() == 1 && command.equals("0"))
                 return;
-            if (controllerPet.trainPet(petomecId, command))
+            if (controllerPet.trainPet(petId, command))
                 System.out.println("получилось!");
         }
     }
