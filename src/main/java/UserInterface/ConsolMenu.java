@@ -3,7 +3,7 @@ package UserInterface;
 import java.util.Scanner;
 import Controller.*;
 import Exception.UncorrectData;
-import Modeli.PetomecTipe;
+import Models.PetTipe;
 
 public class ConsolMenu {
     ControllerPet controllerPet;
