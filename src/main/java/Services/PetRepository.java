@@ -187,7 +187,7 @@ public class PetRepository implements Repository<Pet>{
     public static Connection getConnection() throws SQLException, IOException{
 
         Properties properties = new Properties();
-        try(FileInputStream fil = new FileInputStream("src/Resursy/database.properties")) {
+        try(FileInputStream fil = new FileInputStream("src/Resources/database.properties")) {
 
             properties.load(fil);
             String url = properties.getProperty("url");
