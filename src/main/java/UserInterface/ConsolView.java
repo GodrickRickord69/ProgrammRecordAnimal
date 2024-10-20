@@ -4,7 +4,7 @@ import java.util.Scanner;
 import java.util.List;
 import Models.*;
 
-public class ConsolView {
+public class ConsolView implements View <Pet>{
     Scanner in;
 
     public ConsolView() {
