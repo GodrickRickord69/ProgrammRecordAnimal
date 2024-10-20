@@ -6,7 +6,7 @@ import Servis.PetomecRepository;
 import UserInterface.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import Exception.NekorrektData;
+import Exception.UncorrectData;
 
 public class ControllerPet {
     private Repository<Pet> petomecRepositorij;

@@ -2,7 +2,7 @@ package UserInterface;
 
 import java.util.Scanner;
 import Controller.*;
-import Exception.NekorrektData;
+import Exception.UncorrectData;
 import Modeli.PetomecTipe;
 
 public class ConsolMenu {
@@ -14,7 +14,7 @@ public class ConsolMenu {
 
     public void start() {
         System.out.println();
-        try (Scanner in = new Scanner(System.in); Schetchik schetchik = new Schetchik()){
+        try (Scanner in = new Scanner(System.in); Count count = new Count()){
 
             boolean flag = true;
             int id;
@@ -32,9 +32,9 @@ public class ConsolMenu {
                         if (tipe != null) {
                             try {
                                 controllerPet.createPet(tipe);
-                                schetchik.add();
+                                count.add();
                                 System.out.println("ОК");
-                            } catch (NekorrektData e) {
+                            } catch (UncorrectData e) {
                                 System.out.println(e.getMessage());
                             }
                         }
@@ -45,7 +45,7 @@ public class ConsolMenu {
                             if (id != 0)
                                 try {
                                     controllerPet.updatePet(id);
-                                } catch (NekorrektData e) {
+                                } catch (UncorrectData e) {
                                     System.out.println(e.getMessage());
                                 }
                             else
