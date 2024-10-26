@@ -22,12 +22,12 @@ public abstract class Pet {
     public LocalDate getBirthdayDate(){return birthday;}
 
     public String getBirthday(){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         return formatter.format(birthday);
     }
 
     @Override
     public String toString() {
-        return String.format("имя: , дата рождения: ", getPetId(), getClass().getSimpleName(), name, getBirthday());
+        return String.format("%d. %s: имя: %s, дата рождения: %s ", getPetId(), getClass().getSimpleName(), name, getBirthday());
     }
 }

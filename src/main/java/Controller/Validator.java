@@ -47,7 +47,7 @@ public class Validator {
         int day;
 
         try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             date = LocalDate.parse(birthday, formatter);
             day = date.getDayOfMonth();
         }catch (DateTimeParseException e){

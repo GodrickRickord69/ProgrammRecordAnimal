@@ -19,7 +19,7 @@ public class ConsolView implements View <Pet>{
 
     @Override
     public String getBirthday() {
-        System.out.printf("Дата рождения в форме 'dd.mm.yyyy': ");
+        System.out.printf("Дата рождения в форме 'dd-mm-yyyy': ");
         return in.nextLine();
     }
 

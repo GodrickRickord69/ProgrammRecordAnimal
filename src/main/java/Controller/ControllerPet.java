@@ -24,7 +24,7 @@ public class ControllerPet {
     public void createPet(PetTipe tipe){
         String[] data = new String[] {view.getName(), view.getBirthday()};
         validator.validate(data);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate birthday = LocalDate.parse(data[1], formatter);
         try {
             int res = petRepository.create(petCreator.createPet(tipe, data[0], birthday));
@@ -40,7 +40,7 @@ public class ControllerPet {
 
         validator.validate(data);
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate birthday = LocalDate.parse(data[1], formatter);
         pet.setName(data[0]);
         pet.setBirthday(birthday);

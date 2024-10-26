@@ -30,18 +30,22 @@ public class PetRepository implements Repository<Pet>{
             Class.forName("com.mysql.cj.jdbc.Driver");
             try (Connection dbConnection = getConnection()){
                 sqlST = dbConnection.createStatement();
-                SQLstr = "SELECT Tipe_Id, Id, Pet_Name, Birthday FROM pet_lis ORDER BY Id";
+                SQLstr = "SELECT Kind_Id, Id, Name, Birthday FROM animals ORDER BY Id";
                 resultSet = sqlST.executeQuery(SQLstr);
                 while (resultSet.next()) {
 
                     PetTipe tipe = PetTipe.getTipe(resultSet.getInt(1));
                     int id = resultSet.getInt(2);
+                    System.out.println(id);
                     String name = resultSet.getString(3);
+                    System.out.println(name);
                     LocalDate birthday = resultSet.getDate(4).toLocalDate();
+                    System.out.println(birthday);
 
                     pet = petCreator.createPet(tipe, name, birthday);
                     pet.setPetId(id);
                     farm.add(pet);
+
                 }
                 return farm;
             }
@@ -58,7 +62,7 @@ public class PetRepository implements Repository<Pet>{
             Class.forName("");
             try (Connection dbConnection = getConnection()){
 
-                SQLstr = "SELECT Tipe_Id, Id, PetName, Birtday FROM pet_list WHERE Id = ?";
+                SQLstr = "SELECT Kind_Id, Id, Name, Birtday FROM animals WHERE Id = ?";
                 PreparedStatement preparedStatement = dbConnection.prepareStatement(SQLstr);
                 preparedStatement.setInt(1, petId);
                 resultSet = preparedStatement.executeQuery();
@@ -89,7 +93,7 @@ public class PetRepository implements Repository<Pet>{
             Class.forName("com.mysql.cj.jdbc.Driver");
             try (Connection dbConnection = getConnection()){
 
-                SQLstr = "INSERT INTO pet_command (PetId, CommandId) SELECT ?, (SELECT Id FROM commands WHERE Command_name = ?)";
+                SQLstr = "INSERT INTO animals (Name, Birthday, Kind_Id) SELECT ?, ?, (SELECT Id FROM animals WHERE Tipe_home_name = ?)";
                 PreparedStatement preparedStatement = dbConnection.prepareStatement(SQLstr);
                 preparedStatement.setString(1, pet.getName());
                 preparedStatement.setDate(2, Date.valueOf(pet.getBirthday()));
@@ -108,7 +112,7 @@ public class PetRepository implements Repository<Pet>{
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             try (Connection dbConnection = getConnection()){
-                String SQLstr = "INSERT INTO petomec_command (PetomecId, CommandId) SELECT ?, (SELECT Id FROM commands WHERE Command_name = ?)";
+                String SQLstr = "INSERT INTO pet_command (PetId, CommandId) SELECT ?, (SELECT Id FROM commands WHERE Command_name = ?)";
                 PreparedStatement preparedStatement = dbConnection.prepareStatement(SQLstr);
                 preparedStatement.setInt(1, id);
                 preparedStatement.setString(2, command);
@@ -130,7 +134,7 @@ public class PetRepository implements Repository<Pet>{
                 if (commands_tipe == 1) {
                     SQLstr = "SELECT Command_name FROM pet_command pc JOIN commands c ON pc.CommandId = c.Id WHERE pc.PetId = ?";
                 } else {
-                    SQLstr = "SELECT Command_name FROM commands c JOIN Tipe_command gc ON c.Id = gc.CommandId WHERE gc.Tipe_Id = (SELECT GenusId FROM pet_list WHERE Id = ?)";
+                    SQLstr = "SELECT Command_name FROM commands c JOIN Tipe_command gc ON c.Id = gc.CommandId WHERE gc.Kind_Id = (SELECT Kind_Id FROM pet_list WHERE Id = ?)";
                 }
                 PreparedStatement preparedStatement = dbConnection.prepareStatement(SQLstr);
                 preparedStatement.setInt(1, petId);
@@ -152,7 +156,7 @@ public class PetRepository implements Repository<Pet>{
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             try (Connection dbConnection = getConnection()){
-                SQLstr = "UPDATE petomec_list SET PetomecName = ?, Birthday = ? WHERE Id = ?";
+                SQLstr = "UPDATE petomec_list SET Name = ?, Birthday = ? WHERE Id = ?";
                 PreparedStatement preparedStatement = dbConnection.prepareStatement(SQLstr);
 
                 preparedStatement.setString(1, pet.getName());
@@ -173,7 +177,7 @@ public class PetRepository implements Repository<Pet>{
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             try (Connection dbConnection = getConnection()) {
-                SQLstr = "DELETE FROM pet_list WHERE Id = ?";
+                SQLstr = "DELETE FROM animals WHERE Id = ?";
                 PreparedStatement preparedStatement = dbConnection.prepareStatement(SQLstr);
                 preparedStatement.setInt(1, id);
                 preparedStatement.executeUpdate();
@@ -187,7 +191,7 @@ public class PetRepository implements Repository<Pet>{
     public static Connection getConnection() throws SQLException, IOException{
 
         Properties properties = new Properties();
-        try(FileInputStream fil = new FileInputStream("src/Resources/database.properties")) {
+        try(FileInputStream fil = new FileInputStream("src/main/java/Resources/database.properties")) {
 
             properties.load(fil);
             String url = properties.getProperty("url");
