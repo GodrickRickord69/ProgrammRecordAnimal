@@ -36,11 +36,8 @@ public class PetRepository implements Repository<Pet>{
 
                     PetTipe tipe = PetTipe.getTipe(resultSet.getInt(1));
                     int id = resultSet.getInt(2);
-                    System.out.println(id);
                     String name = resultSet.getString(3);
-                    System.out.println(name);
                     LocalDate birthday = resultSet.getDate(4).toLocalDate();
-                    System.out.println(birthday);
 
                     pet = petCreator.createPet(tipe, name, birthday);
                     pet.setPetId(id);
@@ -59,7 +56,7 @@ public class PetRepository implements Repository<Pet>{
     public Pet getById(int petId){
         Pet pet = null;
         try{
-            Class.forName("");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             try (Connection dbConnection = getConnection()){
 
                 SQLstr = "SELECT Kind_Id, Id, Name, Birtday FROM animals WHERE Id = ?";
@@ -93,7 +90,7 @@ public class PetRepository implements Repository<Pet>{
             Class.forName("com.mysql.cj.jdbc.Driver");
             try (Connection dbConnection = getConnection()){
 
-                SQLstr = "INSERT INTO animals (Name, Birthday, Kind_Id) SELECT ?, ?, (SELECT Id FROM animals WHERE Tipe_home_name = ?)";
+                SQLstr = "INSERT INTO animals (Name, Birthday, Kind_Id) SELECT ?, ?, (SELECT Id FROM animals WHERE Kind_animal = ?)";
                 PreparedStatement preparedStatement = dbConnection.prepareStatement(SQLstr);
                 preparedStatement.setString(1, pet.getName());
                 preparedStatement.setDate(2, Date.valueOf(pet.getBirthday()));
