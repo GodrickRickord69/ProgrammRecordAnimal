@@ -131,7 +131,7 @@ public class PetRepository implements Repository<Pet>{
                 if (commands_tipe == 1) {
                     SQLstr = "SELECT Command_name FROM pet_command pc JOIN commands c ON pc.CommandId = c.Id WHERE pc.PetId = ?";
                 } else {
-                    SQLstr = "SELECT Command_name FROM commands c JOIN Tipe_command gc ON c.Id = gc.CommandId WHERE gc.Kind_Id = (SELECT Kind_Id FROM pet_list WHERE Id = ?)";
+                    SQLstr = "SELECT Command_name FROM commands c JOIN Tipe_command gc ON c.Id = gc.CommandId WHERE gc.Kind_Id = (SELECT Kind_Id FROM Home_Animals_List WHERE Id = ?)";
                 }
                 PreparedStatement preparedStatement = dbConnection.prepareStatement(SQLstr);
                 preparedStatement.setInt(1, petId);
@@ -153,7 +153,7 @@ public class PetRepository implements Repository<Pet>{
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             try (Connection dbConnection = getConnection()){
-                SQLstr = "UPDATE petomec_list SET Name = ?, Birthday = ? WHERE Id = ?";
+                SQLstr = "UPDATE Home_Animals_List SET Name = ?, Birthday = ? WHERE Id = ?";
                 PreparedStatement preparedStatement = dbConnection.prepareStatement(SQLstr);
 
                 preparedStatement.setString(1, pet.getName());
@@ -174,7 +174,7 @@ public class PetRepository implements Repository<Pet>{
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             try (Connection dbConnection = getConnection()) {
-                SQLstr = "DELETE FROM animals WHERE Id = ?";
+                SQLstr = "DELETE FROM Home_Animals_List WHERE Id = ?";
                 PreparedStatement preparedStatement = dbConnection.prepareStatement(SQLstr);
                 preparedStatement.setInt(1, id);
                 preparedStatement.executeUpdate();
